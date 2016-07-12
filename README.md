@@ -16,5 +16,5 @@ If markets were easy to figure out and we could accurately predict the next day'
 
 Stay tuned for some articles that I will write about the algorithms used here and a discussion of the difficulties of using these techniques for algorithmic trading developement.  
 
-[1]: /blob/master/notebooks/singlestock_regresion_(1).ipynb
-[2]: /blob/master/notebooks/multistock_regresion_(2).ipynb
+[1]: /notebooks/singlestock_regresion_(1).ipynb
+[2]: /notebooks/multistock_regresion_(2).ipynb
