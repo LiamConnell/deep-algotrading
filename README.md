@@ -39,7 +39,25 @@ The algorithms increase in complexity and introduce new concepts as they progres
  
  In steps 3-5, we spent a lot of time figuring out tricks to do with the training step, which is a widely researched area at the moment and is probably more relevant to algorithmic trading that anything else. Now we are starting to demonstrate some of the techniques used in the prediction engine (regression before, neural network now). I believe this is a much more researched area and TensorFlow is better equiped for it. Many people describe the types of neural networks that we will learn as cells or *legos*. You dont need to think that much about how it works as long as you know what it does. If you noticed, thats what I did with the neural network. There is a lot more to learn and its worth learning, but when you're actually building with it, you dont think about RELU layers as much as input/output and a black box in the middle. Or at least *I* do...there are a bunch of people in image processing who look inside networks and do [very cool things](https://github.com/google/deepdream). 
  
- 7. [LSTM][7]: My favorite neural network, and a true stepping stone into real deep learning is the long short-term memory network, or LSTM. [Colah](http://colah.github.io/posts/2015-08-Understanding-LSTMs/) wrote an incredibly clear explanation of LSTM and there is really no substitute to reading his post. To describe the setup as briefly as possible, you input the data one timestep at a time to the LSTM cell. And each timestep the cell not only recieves the new input, but it recieves the last timestep's output and what is called the **cell state**, a vector that carries information about what happened in the past. Within the cell you have trained gates (basically small neural nets) that decide, based on the three inputs, what to forget from the past cell state, what to remember (or *add*) to the new state, and what to output this timestep. It is a very powerful tool and fascinating in how [effective it is](http://karpathy.github.io/2015/05/21/rnn-effectiveness/). 
+7. [LSTM][7]: My favorite neural network, and a true stepping stone into real deep learning is the long short-term memory network, or LSTM. [Colah](http://colah.github.io/posts/2015-08-Understanding-LSTMs/) wrote an incredibly clear explanation of LSTM and there is really no substitute to reading his post. To describe the setup as briefly as possible, you input the data one timestep at a time to the LSTM cell. And each timestep the cell not only recieves the new input, but it recieves the last timestep's output and what is called the **cell state**, a vector that carries information about what happened in the past. Within the cell you have trained gates (basically small neural nets) that decide, based on the three inputs, what to forget from the past cell state, what to remember (or *add*) to the new state, and what to output this timestep. It is a very powerful tool and fascinating in how [effective it is](http://karpathy.github.io/2015/05/21/rnn-effectiveness/). 
+
+I am now pretty far into this series and I have a pretty good idea of where it will go from here. These are the problems that I must tackle in no particular order:
+* new policies such as
+    + long/short equality amongs two symbols and more
+    + spread trading (if that is different from above)
+    + minimize correlation/ new risk meaesure that is appropriate for large number of symbols
+* migrating to AWS and using GPU computing power
+* ensebling large numbers of strategies that are generated with the same code
+    + policy grads find local maxima so no reason not to use that to my advantage
+* REDUCE OVERFITTING, use techniques like dropout to avoid overfitting enormously
+* testing suite to be able to test if the strategies are viable objectively
+* convolution nets, especially among larger groups of symbols we can expect that some patterns are fractal
+* turning it into a more formal project or web app
+
+And of course we can start moving to other sources of data:
+* text
+* scraping
+* games
 
 Stay tuned for some articles that I will write about the algorithms used here and a discussion of the difficulties of using these techniques for algorithmic trading developement.  
 
