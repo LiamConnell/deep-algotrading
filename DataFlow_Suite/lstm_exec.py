@@ -129,10 +129,10 @@ class LSTMModel(object):
                 sample_n[i*num_samples + sample_iter] = sample[:,sample_iter]
                 pos[i*num_samples + sample_iter] = tf.reshape(sample_n[i*num_samples + sample_iter], [-1]) - 1
                 symbol_returns[i*num_samples + sample_iter] = tf.mul(
-                                                                    tf.cast(pos[i*num_samples + sample_iter], float32), 
+                                                                    tf.cast(pos[i*num_samples + sample_iter], tf.float32), 
                                                                      self.targets_[:,i])
 
-                sample_mask[i*num_samples + sample_iter] = tf.cast(tf.reshape(tf.one_hot(sample_n[i*num_samples + sample_iter], 3), [-1,3]), float32)
+                sample_mask[i*num_samples + sample_iter] = tf.cast(tf.reshape(tf.one_hot(sample_n[i*num_samples + sample_iter], 3), [-1,3]), tf.float32)
                 relevant_target_column[i*num_samples + sample_iter] = tf.reduce_sum(
                                                             symbol_probs * sample_mask[i*num_samples + sample_iter],1)
 
