@@ -60,7 +60,7 @@ sess = tf.Session()
 positions = tf.constant([-1,0,1]) #long, neutral or short
 num_positions = 3
 num_symbols = len(symbol_list)
-num_samples = 50
+num_samples = 10
 
 n_input = num_symbols * 100
 n_hidden_1 = 10 # 1st layer number of features
@@ -165,14 +165,14 @@ def run_training_and_return_test_results():
     sess.run(init)
     # run optimizer on entire training data set many times
     train_size = train_ins.shape[0]
-    for epoch in range(2000):
-        start = rng.randint(train_size-50)
-        batch_size = rng.randint(2,25)
+    for epoch in range(20000):
+        start = rng.randint(train_size-15)
+        batch_size = rng.randint(2,50)
         end = min(train_size, start+batch_size)
 
         sess.run(optimizer, feed_dict={x: train_ins[start:end], y_: train_outs[start:end]})#.reshape(1,-1).T})
         # every 1000 iterations record progress
-        if (epoch+1)%100== 0:
+        if (epoch+1)%1000== 0:
             t,s, c = sess.run([ total_return, sharpe, costfn], feed_dict={x: train_ins, y_: train_outs})#.reshape(1,-1).T})
             t = np.mean(t)
             s = np.mean(s)
@@ -200,6 +200,7 @@ for i in range(100):
     results.append(te)
     if tr>0:
         pos_results.append(te)
+    print('iter: ', i)
     print(np.mean(results))
     print(np.mean(pos_results))
     #print('final from net', '%f' %zz)
