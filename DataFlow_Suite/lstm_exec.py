@@ -73,7 +73,7 @@ class LSTMModel(object):
         self.inputs_ = tf.placeholder(tf.float32, [None, num_symbols])
         self.targets_ = tf.placeholder(tf.float32, [None,  num_symbols])
 
-        cell = tf.nn.rnn_cell.BasicLSTMCell(hidden_size, forget_bias=0.0)
+        cell = tf.nn.rnn_cell.BasicLSTMCell(hidden_size, forget_bias=0.0, state_is_tuple=True)
         #cell = tf.nn.rnn_cell.MultiRNNCell([cell] * config.num_layers)
         cell = tf.nn.rnn_cell.InputProjectionWrapper(cell,  num_symbols)
         cell = tf.nn.rnn_cell.OutputProjectionWrapper(cell, n_classes)
@@ -231,3 +231,5 @@ with tf.Graph().as_default(), tf.Session() as session:
     results.append(ttt)
     if trt>0:
         pos_results.append(ttt)
+print(np.mean(results))
+print(np.mean(pos_results))
