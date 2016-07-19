@@ -127,7 +127,13 @@ In steps 3-5, we spent a lot of time figuring out tricks to do with the training
 
 From [Wikipedia][wiki_reg])), "regularization is the introduction of additional information in order to solve an ill-posed problem or to prevent overfitting." For our purposes, it is any technique used to reduce overfitting. One of the simplest yet most important examples is [early stopping][early_stopping], that is, ending gradient descent before there is no significant gain in evaluation performance. The idea is that once the model stops improving, it will start to overfit the training data. Most overfitting can be avoided with just this technique. 
 
-We have more overfitting problems. Our problem is very noisey with faint signals that are very complex. Markets are zero sum and there are already an enormous number of very smart people getting paid a very large amount of money to develope trading strategies. In fact there are probably many that are using deep learning, maybe even some that are using tensorflow. There are many different patterns that can be learned but we can assume that all of the simple ones have been found (and therefore traded out of the market). Also, the market structure and properties change with time so even if we found a great pattern for the past five years, it might not work a month from now. (I hope I haven't shattered all of your dreams.)
+We have more overfitting problems. Financial data is very noisey with faint signals that are very complex. Markets are zero sum and there are already an enormous number of very smart people getting paid a very large amount of money to develop trading strategies. There are many different patterns that can be learned but we can assume that all of the simple ones have been found (and therefore traded out of the market). Also, the market structure and properties change with time so even if we found a great pattern for the past five years, it might not work a month from now. 
+
+We therefore need even more strategies to prevent overfitting. One strategy is called [L2 regularization](http://www.kdnuggets.com/2015/04/preventing-overfitting-neural-networks.html/2). Basically, we *punish a network for having very large weights* by adding the L2 norm of the weights, *1/2(||W||^2_2)*, times a constant *B* (to determine how much we want to regularize). It allows us to control the level of model complexity.
+
+Another method is called [dropout regularization](http://arxiv.org/abs/1207.0580), a technique developed by Geoffrey Hinton. Overfitting is avoided by randomly ommitting half of the neurons during each training iteration. It sounds kooky but the idea is that it avoids the co-adaptation of features in the neural network, so that recognizing a certain set of features does not imply another set, as is the case in many overtrained nets. This way, each neuron will learn to detect a feature that is generally helpful. In validation and normal use, the neurons are not dropped so as to use all informaation. The technique makes the model more robust, avoids overfitting, and essentially turns your network into an ensemble that reaches consensus. Tensorflow's dropout layer includes the scaling required to safely ensemble when it comes time for validation. 
+
+Since we want the same model with two different configurations--one with dropout active and one without--we will now pursue our long-overdue duty of refactoring our code. Although the code is presented in a single notebook, keep in mind that what I am essentially doing is modularizing. I won't claim that I am the most organized with my code, but I tried to keep it consistent with the best practices that I have observed others using with their open projects. Moving forward we will keep this structure becuase it is clearly superior to the organization that I had used before. 
 
 ##LSTM [(notebook)][8]
 
@@ -141,7 +147,6 @@ I am now pretty far into this series and I have a pretty good idea of where it w
 * migrating to AWS and using GPU computing power
 * ensebling large numbers of strategies that are generated with the same code
     + policy grads find local maxima so no reason not to use that to my advantage
-* REDUCE OVERFITTING, use techniques like dropout to avoid overfitting enormously
 * testing suite to be able to test if the strategies are viable objectively
 * convolution nets, especially among larger groups of symbols we can expect that some patterns are fractal
 * turning it into a more formal project or web app
